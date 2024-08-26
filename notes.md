@@ -1,4 +1,4 @@
-Docker
+# Docker
 
 - There are chances where Physical servers resources are under utilized. Resources mean CPU, RAM etc.
 - To solve this hypervisor concept was introduced which creates virtual servers on top of existing physical server. It does the logical division of existing machine and creates multiple servers.
@@ -9,7 +9,7 @@ Docker
 - A monitoring and logging stack, such as CloudWatch, Splunk, Grafana and Prometheus.
 - Secrets Management tooling, such as Vault, AWS Secrets Manager	
 
-why VM is heavy and container is light weight ?
+## why VM is heavy and container is light weight ?
 a VM is heavy cos it contains entire OS in isolation where as container shares the resources from the base machine. 
 container is a package that contains application, libraries and required dependencies to run the application which is also called base image. 
 
@@ -23,23 +23,21 @@ harware --> hypervisor --> VM1 ( OS, Docker, (Container1 (Lib, App)), VM2 ( OS, 
 
 ======================================================================================================================================
 
-what is a docker ?
+## what is a docker ?
 Docker is a platform which implements the containerization concept. 
 
-
-what is a docker image ?
+## what is a docker image ?
 A Docker image is a lightweight, standalone, and portable package that contains all the necessary components, including code, runtime, libraries, and dependencies, to run a software application in a containerized environment. Images are created from a set of instructions in a Dockerfile and can be shared and distributed via Docker registries. once a image is built, it can be run on any host having
 docker present.  docker file ---> image
 
-
-when a image is run, why it is called a container ?
+## when a image is run, why it is called a container ?
 When a Docker image is run, it becomes an active and executable instance of that image, and it is referred to as a "container." A container is essentially a running process that encapsulates the application and its dependencies, isolated from the host system and other containers. Containers provide process isolation. Each container runs as an isolated process on the host system, ensuring that the application and its dependencies do not interfere with other containers or the host environment.Containers encapsulate the application and its dependencies, making them highly portable. They can run consistently across different environments, such as development, testing, and production.	docker file ---> image ---> container
 
 write docker file , submit to docker engine using docker command (docker build) --> will convert to docker image(docker run) --> will convert to container.
 Docker engine is a single point of failure,  if engine goes down, all container will stop.Terrible. 
 
 
-explain docker architecture ?
+## explain docker architecture ?
 
 - docker client (cli) : user interact with Docker through the Docker client (cli).The client sends commands to the Docker daemon aka docker engine, telling it what to do. 
 - docker daemon : Heart of the docker, the "boss" that takes care of everything related to containers.
@@ -55,7 +53,7 @@ It is responsible for handling container lifecycle operations, such as creating,
 Containers are Houses: Once you have your blueprint (image), you can create multiple houses (containers) based on that design.
 
 
-rivals of docker ?
+## - rivals of docker ?
 Buildah, podman, kubernetes, rocket.
 
 Installaton - 
@@ -200,7 +198,7 @@ If the user provides a command when running the container, it is appended to the
 
 ====================================================================================================================================================
 
-Docker Registry
+## Docker Registry
 
 images are storied in docker hub (docker.io). 
 In house application images are storied in private registry. we need to login to priviate registry in order to pull a image.
@@ -224,7 +222,7 @@ docker push localhost:5000/myImage
 
 ====================================================================================================================================================
 
-Docker networking - 
+## Docker networking - 
 
 docker networking offers solution like
 - one container can talk to another container
@@ -264,7 +262,7 @@ docker run -d -e MYSQL_ROOT_PASSWORD=db_pass123 --name mysql-db --network wp-mys
 Docker storage - Docker stores data on local host at  /var/lib/docker . This have folder like aufs, container, image, volumes
 
 
-How is docker used in kubernetes ?
+## How is docker used in kubernetes ?
 
 Docker is used in Kubernetes as the container runtime, responsible for managing the lifecycle of containers within the cluster. Here's how Docker fits into the Kubernetes architecture and how it's used:
 
@@ -278,41 +276,41 @@ kubernetes --> docker api/docker CRI  --> docker hub/jrog --> pull image --> cre
 
 =================================================================================================================================================
 
-how many images are available ?
+## how many images are available ?
 docker images
 
-how to check size of image ?
+## how to check size of image ?
 docker inspect ubuntu
 
-Build a docker image using the Dockerfile and name it webapp-color. No tag to be specified.
+## Build a docker image using the Dockerfile and name it webapp-color. No tag to be specified.
 docker build -t webapp-color .
 
-how to remove un-used docker resources which are claiming disk spaces ?
+## how to remove un-used docker resources which are claiming disk spaces ?
 using prune command. But it should be carefully used as it will delete the resource along with its data permanently. So you may lose the data.
 docker image prune
 docker container prune
 docker volume prune
 docker network prune
 
-how many containers can you create in docker ?
+## how many containers can you create in docker ?
 There is no explicit limit but It will depend on the hardware contraints like no of cpu available and size of the application. lighter the application, lesser it will consume cpu.
 
-how to limit the memory and no of cpu which can be used for any given container ?
+## how to limit the memory and no of cpu which can be used for any given container ?
 we can set the cpu limit using --cpu option and memory limit with --memory option. 
 docker run --cpu 2 --memory 1g container_name
 docker exec my_container ls /app
 
-what is docker file ?
+## what is docker file ?
 dockerfile is a text file that contain commands to build an image. It can specify base image, files to add to the container, commands to run during the build process and commands to run
 when container starts.
 
-what is the purpose of CMD instruction in docker file ?
+## what is the purpose of CMD instruction in docker file ?
 The CMD instruction specifices the default command to be run when container starts. It defnies the primary functonality of container such as running application or running a script.
 
-how would you scale docker containers ?
+## how would you scale docker containers ?
 Using docker swarm or kubernetes.
 
-how to debug issues in failing container ?
+## how to debug issues in failing container ?
 There are several ways
 1) logging - docker logs
 2) shell command
@@ -321,32 +319,32 @@ docker exec my_container ls /app  ( Run a command inside a container )
 3) image inspection - docker image inspect
 
 
-how do you update container w.o losing data ?
+## how do you update container w.o losing data ?
 create backup of data.
 stop container, docker stop
 pull latest version of docker image, docker pull
 start a new container
 
-how do you secure docker containers ?
+## how do you secure docker containers ?
 using trusted base image from reputable sources
 regularly updating underlygin host system with security patches
 scanning containers for vulnerabilities.
 applying least privelge principle.
 loggin for securty analysis.
 
-Did you use docker with ci/cd tool ?
+## Did you use docker with ci/cd tool ?
 Yes, with Jenkins. Jenkins would trigger a job where it builds new docker image using the docker file . This image is pushed to jfrog artifactory where it is pulled and deployed into production
 env using kubernetes.
 
-how is docker used within aws ?
+## how is docker used within aws ?
 we utilized docker within aws ecs. we also used aws fargate for serverless compute for our containers.
 
-how do you use docker with kubernetes ?
+## how do you use docker with kubernetes ?
 kubernetes uses docker api to interact with docker and perform container related tasks like pulling images, creating containers and managing their lifecycle. docker images are typically
 stored in docker registry or other repository like jfrog accessible to kubernetes cluster.
 
 
-how did you use terraform to automate the deployment of docker containers ?
+## how did you use terraform to automate the deployment of docker containers ?
 Terraform provides a Docker provider that allows you to interact with Docker resources, such as containers, images, networks, and volumes. we define Docker resources in your Terraform configuration using resource blocks, specifying attributes such as image, name, port mappings, environment variables, and volumes. After defining your Terraform configuration, you run terraform plan and terraform apply. 
 
 provider "docker" {
@@ -363,7 +361,7 @@ resource "docker_container" "my_container" {
 }
 
 
-how do you implement canary deployment with docker and kubernetes ?
+## how do you implement canary deployment with docker and kubernetes ?
 set up a kubernetes cluster and deploy your application using docker container. create a new deployment for the updated version. configure the canary deployment to receive small % of traffic
 and gradually increare the traffic based on feedback n stability. 
 
